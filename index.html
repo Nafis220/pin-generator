@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin ="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="whole_wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input class="form-control" placeholder="Get Code Here"  id="showCode" type="text">
+                    <button class="generate-btn" onclick="pinGenerator()" id="generate-btn"> Click TO Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input class="form-control" placeholder="Give 4 Digit Code" id="number-input" type="text">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div class="button" onclick="numberFunction(7)">7</div>
+                              <div class="button" onclick="numberFunction(8)">8</div>
+                              <div class="button" onclick="numberFunction(9)">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button" onclick="numberFunction(4)">4</div>
+                              <div class="button" onclick="numberFunction(5)">5</div>
+                              <div class="button" onclick="numberFunction(6)">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button" onclick="numberFunction(1)" id="one">1</div>
+                              <div class="button" onclick="numberFunction(2)">2</div>
+                              <div class="button" onclick="numberFunction(3)">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" onclick="clearFunction(false)"> < </div>
+                                <div class="button" onclick="numberFunction(0)">0</div>
+                                <div class="button" onclick="clearFunction(true)">C</div>
+                            </div>
+                            <div>
+                                <button type="submit" class="submit-btn" onclick="codeMatchingFunction()" id="submitBtn" >Submit</button>
+                                <p class="action-left"> <span id="numberOfTry">3</span>  try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section">
+            <p class="notify"  id="unMatched">❌ Pin Didn't Match, Please try again</p>
+            <p class="notify " onclick="secretFunction()" id="matched">✅ Pin Matched... Click Here To Open Secret Door</p>
+        </div>
+    </div>
+ </div>
+</div>
+</div>
+    <div id="surprise"><img src="image/pic.jpg" alt="" class="surprise-img d-block mx-auto"></div>
+   <!--Sir I did this To show my friends hope you will not cut marks for this :D -->
+</body>
+
+<script>
+
+
+function pinGenerator() {
+  
+let randomNumber = Math.round(Math.random() * 10000);
+  let stringOfRandomNum = randomNumber.toString().length;// Used To get the length 
+  
+  if(stringOfRandomNum == 3  ){
+   
+   let newNumber = randomNumber * 10 ; 
+    document.getElementById('showCode').value = newNumber ;
+  }
+  else if(stringOfRandomNum == 2){
+    
+   let newNumber = randomNumber * 100 ; 
+    document.getElementById('showCode').value = newNumber ;
+  }
+else{ document.getElementById('showCode').value = randomNumber }
+  }
+
+
+ function numberFunction(number){
+   let inputBar =  document.getElementById('number-input') ;
+   inputBar.value = inputBar.value + number ;
+ }
+
+// backspace and clear function 
+  function clearFunction(isTrue){
+      if( isTrue == true){
+    document.getElementById('number-input').value = ""
+}
+else{
+   let currentNum =  document.getElementById('number-input').value;
+   currentNum = currentNum.substr(0,currentNum.length - 1);
+   document.getElementById('number-input').value = currentNum;
+}
+  }
+
+function codeMatchingFunction(){
+    let inputBar = document.getElementById('number-input').value;
+    const randomNumber =  document.getElementById('showCode').value;
+    
+    
+
+     if(inputBar == ""){
+        document.getElementById('number-input').value = 'Give Code First';
+     }
+
+    else if(inputBar == randomNumber){
+        
+         document.getElementById('matched').style.display = "block";
+         document.getElementById('unMatched').style.display = "none"
+    
+        }
+   
+
+    else if(inputBar < 999 || inputBar > 9999){
+            alert('Invalid Code')
+        }
+
+    else{
+        document.getElementById('unMatched').style.display = "block";
+        document.getElementById('matched').style.display = "none";
+       const tryCount =  document.getElementById('numberOfTry').innerText;
+       if(tryCount >= 2 ){
+        document.getElementById('numberOfTry').innerText = document.getElementById('numberOfTry').innerText -1 
+        }
+      else {
+        document.getElementById('numberOfTry').innerText = 0 ; 
+        document.getElementById('submitBtn').innerText = 'Failed';
+        document.getElementById('submitBtn').disabled = true
+        document.getElementById('submitBtn').style.background = 'red'
+      }
+    }  
+  }
+function secretFunction(){
+    document.getElementById('surprise').style.display = "block";
+    document.getElementById('whole_wrapper').style.display = "none"
+}
+
+</script>
+
+
+
+</html>

@@ -108,6 +108,7 @@ color: #E0B612;
 #matched
 {
     display: none;
+    cursor: pointer;
 }
 #unMatched
 {
@@ -130,5 +131,4 @@ and (max-device-width : 480px) {
 {
     padding: 0;
 }
-
 }
